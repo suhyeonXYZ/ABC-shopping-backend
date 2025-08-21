@@ -38,4 +38,4 @@ jobs:
           context: .
           push: true
           tags: |
-            ${{ steps.login-ecr.outputs.registry }}/${{ secrets.ECR_REPOSITORY }}:${{ github.event.inputs.image_tag }}
+            ${{ secrets.ECR_BACKEND_REPOSITORY }}:${{ github.event.inputs.image_tag }}
