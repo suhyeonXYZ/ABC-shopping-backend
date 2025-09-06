@@ -36,7 +36,7 @@ jobs:
         run: docker build -t ${{ secrets.ECR_BACKEND_REPOSITORY }}:${{ github.event.inputs.image_tag }} .
 
       - name: Scan Docker image with Trivy
-        uses: aquasecurity/trivy-action@v0.5.0
+        uses: aquasecurity/trivy-action@v0.2.4
         with:
           image-ref: ${{ secrets.ECR_BACKEND_REPOSITORY }}:${{ github.event.inputs.image_tag }}
           format: sarif
