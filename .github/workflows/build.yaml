@@ -40,19 +40,19 @@ jobs:
           tags: |
             ${{ secrets.ECR_BACKEND_REPOSITORY }}:${{ github.event.inputs.image_tag }}
             
-      - name: Login to Azure ACR
-        uses: azure/docker-login@v1
-        with:
-          login-server: ${{ secrets.ACR_LOGIN_SERVER }}
-          username: ${{ secrets.ACR_USERNAME }}
-          password: ${{ secrets.ACR_PASSWORD }}
-
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          push: true
-          tags: |
-            ${{ secrets.ACR_LOGIN_SERVER }}/${{ secrets.ACR_REPOSITORY }}:${{ github.event.inputs.image_tag }}
+#      - name: Login to Azure ACR
+#        uses: azure/docker-login@v1
+#        with:
+#          login-server: ${{ secrets.ACR_LOGIN_SERVER }}
+#          username: ${{ secrets.ACR_USERNAME }}
+#          password: ${{ secrets.ACR_PASSWORD }}
+#
+#      - name: Build and push Docker image
+#        uses: docker/build-push-action@v5
+#        with:
+#          context: .
+#          push: true
+#          tags: |
+#            ${{ secrets.ACR_LOGIN_SERVER }}/${{ secrets.ACR_REPOSITORY }}:${{ github.event.inputs.image_tag }}
       
   
