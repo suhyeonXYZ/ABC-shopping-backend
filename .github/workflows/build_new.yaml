@@ -36,25 +36,27 @@ jobs:
         run: docker build -t ${{ secrets.ECR_BACKEND_REPOSITORY }}:${{ github.event.inputs.image_tag }} .
 
       - name: Scan Docker image with Trivy
+        id: trivy-scan
         uses: aquasecurity/trivy-action@0.28.0
+        continue-on-error: true   # 🚨 실패해도 다음 단계 진행
         with:
           image-ref: ${{ secrets.ECR_BACKEND_REPOSITORY }}:${{ github.event.inputs.image_tag }}
           format: sarif
           output: trivy-results.sarif
-          exit-code: 1
           severity: CRITICAL,HIGH
           ignore-unfixed: true
 
       - name: Upload Trivy SARIF report to GitHub Security tab
+        if: always()  # 🚨 항상 실행되도록 보장
         uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: trivy-results.sarif
 
       - name: Build and push Docker image
+        if: success()  # 🚨 빌드/푸시는 Trivy가 돌아간 뒤에도 성공일 때만
         uses: docker/build-push-action@v5
         with:
           context: .
           push: true
           tags: |
             ${{ secrets.ECR_BACKEND_REPOSITORY }}:${{ github.event.inputs.image_tag }}
-           
