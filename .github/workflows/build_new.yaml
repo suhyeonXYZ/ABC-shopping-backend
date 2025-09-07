@@ -9,6 +9,10 @@ on:
         default: 'latest'
         type: string
 
+permissions:
+  contents: read        # 코드 checkout 정도만 필요
+  security-events: write # SARIF 업로드에 필요
+
 jobs:
   build-and-push:
     name: Build, Scan and Push Container Image
